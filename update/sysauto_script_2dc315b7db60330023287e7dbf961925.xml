@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sysauto_script">
+    <sysauto_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <condition/>
+        <conditional>false</conditional>
+        <name>Update email addresses</name>
+        <run_as display_value="System Administrator">6816f79cc0a8016401c5a33be04be441</run_as>
+        <run_as_tz/>
+        <run_dayofmonth>1</run_dayofmonth>
+        <run_dayofweek>1</run_dayofweek>
+        <run_period/>
+        <run_start>2019-04-08 09:01:56</run_start>
+        <run_time>1970-01-01 08:00:00</run_time>
+        <run_type>once</run_type>
+        <script><![CDATA[replaceAllEmailAddresses();
+
+function replaceAllEmailAddresses()
+{
+	//var niutils = new NeedItUtils();
+	//niutils.replaceAllEmailAddresses();
+	var niutils = new NeedItUtils();
+	var oldValue =  'example.no';
+	var newValue = 'example.com';
+	
+	var bookingRecords = new GlideRecord('x_58872_needit_needit');
+	bookingRecords.query();
+	while (bookingRecords.next()) {
+		email = bookingRecords.u_requested_for_email;
+		if ((email == '') || (email.indexOf(oldValue) == -1))
+			continue;
+		
+		var newEmail = niutils.replaceEmailAddress(email,oldValue,newValue);
+		gs.info('Old email address:' + email + ',New email address:' + newEmail, 'replaceAllEmailAddresses');
+		
+		//bookingRecords.u_requested_for_email = newEmail;
+		//bookingRecords.update();
+	}
+	
+}]]></script>
+        <sys_class_name>sysauto_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-04-08 09:04:17</sys_created_on>
+        <sys_id>2dc315b7db60330023287e7dbf961925</sys_id>
+        <sys_mod_count>14</sys_mod_count>
+        <sys_name>Update email addresses</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sysauto_script_2dc315b7db60330023287e7dbf961925</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-04-23 12:36:57</sys_updated_on>
+        <upgrade_safe>false</upgrade_safe>
+    </sysauto_script>
+</record_update>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ui_action">
+    <sys_ui_action action="INSERT_OR_UPDATE">
+        <action_name/>
+        <active>true</active>
+        <client>true</client>
+        <client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+        <comments/>
+        <condition/>
+        <form_action>true</form_action>
+        <form_button>true</form_button>
+        <form_button_v2>false</form_button_v2>
+        <form_context_menu>false</form_context_menu>
+        <form_link>false</form_link>
+        <form_menu_button_v2>false</form_menu_button_v2>
+        <form_style/>
+        <hint/>
+        <isolate_script>true</isolate_script>
+        <list_action>false</list_action>
+        <list_banner_button>false</list_banner_button>
+        <list_button>false</list_button>
+        <list_choice>false</list_choice>
+        <list_context_menu>false</list_context_menu>
+        <list_link>false</list_link>
+        <list_save_with_form_button>false</list_save_with_form_button>
+        <list_style/>
+        <name>Display Contact Email Address</name>
+        <onclick>displayContactEmailAddress()</onclick>
+        <order>100</order>
+        <script><![CDATA[function displayContactEmailAddress() {
+	//alert('Inside action');
+	
+	//var email = g_form.getValue('u_requested_for_email');
+	//jslog("HOWIE: The value of email = " + email);
+	var contact_id = g_form.getValue('u_requested_for');
+	jslog("HOWIE: The value of contact_id = " + contact_id);
+	//alert('Requested For email address is: ' + email);
+	//alert('Requested For(sys_id) is: ' + contact_id);
+	// Pass the Requested for email to the Script Include.  Store the return
+	// value from the Script Include in the isEmail variable
+	//var isEmail = validateEmailAddress(email);
+	try {
+		//var emailAddress = new x_58872_needit.GetEmailAddress();
+		//jslog("HOWIE: The value of emailAddress = " + emailAddress);
+		//var contact_email = new x_58872_needit.GetEmailAddress().getEmail(contact_id);
+		//jslog("HOWIE: The value of contact_email = " + contact_email);
+		// Instantiate the GetEmailAddress Script Include
+		var getEmailAddr = new GlideAjax('GetEmailAddress');
+		jslog("HOWIE: The value of getEmailAddr = " + getEmailAddr);
+		// Specify the getEmail method
+		getEmailAddr.addParam('sysparm_name','getEmail');
+		// Pass the Requested for sys_id
+		getEmailAddr.addParam('sysparm_userID', contact_id);
+		// Send the request to the server
+		getEmailAddr.getXML(populateEmailField);
+		
+		
+		
+	}
+	catch(err) {
+		jslog('A JavaScript runtime error occurred: ' + err.message);
+	}
+	// If isEmail is false (email address syntax is not valid) do not save
+	// the record.  Write an error message to the screen.
+	//if (isEmail == true) {
+		//	gs.addInfoMessage(email + " is a valid email address.");
+		//} else {
+			//    gs.addErrorMessage(email + " is not a valid email address.  You must provide a valid email address.");
+			//}
+	// When the response is back from the server
+		function populateEmailField(response){
+			jslog("HOWIE: The value of response = " + response);
+			// Extract the email address from the response, clear any value from the email field,
+			// set new value in the email field
+			var emailFromScriptInclude = response.responseXML.documentElement.getAttribute("answer");
+			jslog("HOWIE: The value of emailFromScriptInclude = " + emailFromScriptInclude);
+			//g_form.clearValue('u_requested_for_email');
+			//g_form.setValue('u_requested_for_email',emailFromScriptInclude);
+			var message = "The contact email address is: " + emailFromScriptInclude;
+			//gs.addInfoMessage("The contact email address is: " + emailFromScriptInclude);
+			alert(message);
+		}
+}
+		
+		
+]]></script>
+        <show_insert>false</show_insert>
+        <show_multiple_update>false</show_multiple_update>
+        <show_query>false</show_query>
+        <show_update>true</show_update>
+        <sys_class_name>sys_ui_action</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2019-04-05 10:49:13</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>833fcebadb20330023287e7dbf961916</sys_id>
+        <sys_mod_count>24</sys_mod_count>
+        <sys_name>Display Contact Email Address</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_ui_action_833fcebadb20330023287e7dbf961916</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2019-04-08 08:06:41</sys_updated_on>
+        <table>x_58872_needit_needit</table>
+        <ui11_compatible>true</ui11_compatible>
+        <ui16_compatible>false</ui16_compatible>
+    </sys_ui_action>
+</record_update>
